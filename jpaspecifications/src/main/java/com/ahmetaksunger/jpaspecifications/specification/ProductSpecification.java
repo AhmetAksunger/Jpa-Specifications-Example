@@ -2,6 +2,7 @@ package com.ahmetaksunger.jpaspecifications.specification;
 
 import com.ahmetaksunger.jpaspecifications.entity.Category;
 import com.ahmetaksunger.jpaspecifications.entity.Product;
+import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Join;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -79,7 +80,7 @@ public class ProductSpecification {
     // ### JOINS
     public static Specification<Product> hasCategoryNameLike(String categoryName) {
         return (root, query, criteriaBuilder) -> {
-            Join<Product, Category> categoryJoin = root.join("category");
+            Join<Product, Category> categoryJoin = root.join("categories");
 
             return criteriaBuilder.like(categoryJoin.get("name"), categoryName);
         };
@@ -87,7 +88,7 @@ public class ProductSpecification {
 
     public static Specification<Product> hasCategoryIds(Collection<Long> categoryIds) {
         return (root, query, criteriaBuilder) -> {
-            Join<Product, Category> categoryJoin = root.join("category");
+            Join<Product, Category> categoryJoin = root.join("categories");
 
             return categoryJoin.get("id").in(categoryIds);
         };
@@ -96,11 +97,16 @@ public class ProductSpecification {
 
     // ### BOOLEANS
     public static Specification<Product> search(String keyword) {
-        return (root, query, criteriaBuilder) ->
-                criteriaBuilder.or(
-                        criteriaBuilder.like(root.get("name"), "%" + keyword + "%"),
-                        criteriaBuilder.like(root.get("companyName"), "%" + keyword + "%")
-                );
+        return (root, query, criteriaBuilder) -> {
+
+            Expression<String> nameLowercase = criteriaBuilder.lower(root.get("name"));
+            Expression<String> companyNameLowercase = criteriaBuilder.lower(root.get("companyName"));
+
+            return criteriaBuilder.or(
+                    criteriaBuilder.like(nameLowercase, "%" + keyword.toLowerCase() + "%"),
+                    criteriaBuilder.like(companyNameLowercase, "%" + keyword.toLowerCase() + "%")
+            );
+        };
     }
     // ###
 }
