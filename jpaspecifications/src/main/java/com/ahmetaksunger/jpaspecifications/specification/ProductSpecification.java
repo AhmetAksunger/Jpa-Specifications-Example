@@ -6,8 +6,8 @@ import jakarta.persistence.criteria.Join;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 public class ProductSpecification {
 
@@ -85,7 +85,7 @@ public class ProductSpecification {
         };
     }
 
-    public static Specification<Product> hasCategoryIds(List<Long> categoryIds) {
+    public static Specification<Product> hasCategoryIds(Collection<Long> categoryIds) {
         return (root, query, criteriaBuilder) -> {
             Join<Product, Category> categoryJoin = root.join("category");
 
