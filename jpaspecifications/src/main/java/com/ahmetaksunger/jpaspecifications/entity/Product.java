@@ -35,7 +35,7 @@ public class Product extends BaseEntity {
     @Column(name = "COMPANY_NAME")
     private String companyName;
 
-    @OneToMany
+    @ManyToMany
     private Set<Category> categories;
 
 }
