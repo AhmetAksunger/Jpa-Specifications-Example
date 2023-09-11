@@ -3,11 +3,13 @@ package com.ahmetaksunger.jpaspecifications.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "PRODUCTS")
 @AllArgsConstructor
