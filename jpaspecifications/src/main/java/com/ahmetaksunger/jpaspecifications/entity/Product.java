@@ -1,12 +1,18 @@
 package com.ahmetaksunger.jpaspecifications.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Set;
 
 @Entity
 @Table(name = "PRODUCTS")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Product extends BaseEntity {
 
     @Id

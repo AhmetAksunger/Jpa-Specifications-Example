@@ -17,12 +17,12 @@ public abstract class BaseEntity {
     protected Date updatedAt;
 
     @PrePersist
-    public void prePersist() {
+    private void prePersist() {
         this.createdAt = new Date();
     }
 
     @PreUpdate
-    public void preUpdate() {
+    private void preUpdate() {
         this.updatedAt = new Date();
     }
 }
