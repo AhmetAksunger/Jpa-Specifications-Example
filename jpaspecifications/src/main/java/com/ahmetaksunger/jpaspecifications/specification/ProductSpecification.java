@@ -4,17 +4,15 @@ import com.ahmetaksunger.jpaspecifications.entity.Category;
 import com.ahmetaksunger.jpaspecifications.entity.Product;
 import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Join;
+import lombok.experimental.UtilityClass;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 
+@UtilityClass
 public class ProductSpecification {
-
-    private ProductSpecification() {
-    }
-
 
     // #### EQUALITY
     public static Specification<Product> hasName(String name) {
