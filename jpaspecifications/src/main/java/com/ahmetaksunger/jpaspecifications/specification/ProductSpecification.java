@@ -107,4 +107,21 @@ public class ProductSpecification {
         };
     }
     // ###
+
+    // ### COLLECTION OPERATIONS
+    public static Specification<Product> isCategorized() {
+        return (root, query, criteriaBuilder) -> {
+            Join<Product, Category> categoryJoin = root.join("categories");
+
+            return criteriaBuilder.isNotEmpty(categoryJoin.get("id"));
+        };
+    }
+
+    public static Specification<Product> hasCategoryIdsCountGreaterThan(int count) {
+        return (root, query, criteriaBuilder) -> {
+            Join<Product, Category> categoryJoin = root.join("categories");
+
+            return criteriaBuilder.greaterThan(criteriaBuilder.size(categoryJoin.get("id")), count);
+        };
+    }
 }
